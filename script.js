@@ -2,7 +2,7 @@ const hamburguer = document.querySelector('.header .nav-bar .nav-list .nav-burgu
 const hamburguerA = document.querySelector('.header .nav-bar .nav-list .nav-burguer .active');
 const mobile = document.querySelector('.header .nav-bar .nav-list ul');
 const mobileA = document.querySelector('.header .nav-bar .nav-list ul .active');
-const item = document.querySelector('.header .nav-bar .nav-list ul li');
+const item = document.querySelectorAll('.header .nav-bar .nav-list ul li a');
 const header = document.querySelector('.header.container');
 
 hamburguer.addEventListener("click", ()=>{
@@ -10,7 +10,7 @@ hamburguer.addEventListener("click", ()=>{
     mobile.classList.toggle("active");
 })
 
-item.addEventListener("click", () =>{
+item.forEach(selectItem => selectItem.addEventListener("click", ()=>{
     hamburguer.classList.toggle("active");
     mobile.classList.toggle("active");
-})
+}))
