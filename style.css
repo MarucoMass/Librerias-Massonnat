@@ -763,7 +763,7 @@ li {
           justify-content: center;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
   #header .nav-list .brand a {
     font-size: 4rem;
   }

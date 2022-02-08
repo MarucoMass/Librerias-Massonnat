@@ -11,6 +11,8 @@ hamburguer.addEventListener("click", ()=>{
 })
 
 item.forEach(selectItem => selectItem.addEventListener("click", ()=>{
-    hamburguer.classList.toggle("active");
-    mobile.classList.toggle("active");
+    if ((mobile.classList = "active") || (hamburguer.classList = "active")) {
+        hamburguer.classList.toggle("active");
+        mobile.classList.toggle("active");     
+    }
 }))
