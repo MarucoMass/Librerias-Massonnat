@@ -64,6 +64,26 @@ li {
   padding: 10px;
 }
 
+#header .header .carritoSmallScreen {
+  position: absolute;
+  right: 65px;
+  top: 25%;
+  font-size: 1.2rem;
+  color: #eeeeee;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  display: block;
+  text-align: center;
+  z-index: 1;
+}
+
+#header .header .carritoSmallScreen:hover {
+  color: #c91515;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
 #header .header .brand a {
   font-size: 3rem;
   font-weight: 600;
@@ -71,7 +91,7 @@ li {
 }
 
 #header .header .brand a span {
-  color: #a52525;
+  color: #c91515;
 }
 
 #header .header .nav-list ul {
@@ -112,8 +132,12 @@ li {
   display: block;
 }
 
+#header .header .nav-list ul a.carritoFullScreen {
+  display: none;
+}
+
 #header .header .nav-list ul a:hover {
-  color: #a52525;
+  color: #c91515;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -139,7 +163,7 @@ li {
       -ms-flex-align: center;
           align-items: center;
   z-index: 100;
-  margin-right: 15px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -321,7 +345,7 @@ li {
           animation: titulo 1.5s ease;
 }
 
-.cursos_boxes {
+.cursos #cursos_boxes {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -344,9 +368,9 @@ li {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -354,7 +378,7 @@ li {
   padding: 10px;
   margin: 10px;
   position: relative;
-  background-image: url(./img/guitarra.jpg);
+  background-image: url(./img/musical-instruments-wooden-background-1385525.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
@@ -399,21 +423,22 @@ li {
   font-weight: 300;
 }
 
-.cursos_box a {
+.cursos_box button {
   display: inline-block;
   background-color: transparent;
-  border: 1.5px solid #a52525;
-  color: #a52525;
-  margin: 10px auto;
+  border: 1.5px solid #c91515;
+  color: #c91515;
+  margin: 20px auto 10px auto;
   padding: 6px;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
   -webkit-transition-property: background-color, color;
   transition-property: background-color, color;
+  cursor: pointer;
 }
 
-.cursos_box a:hover {
-  background-color: #a52525;
+.cursos_box button:hover {
+  background-color: #c91515;
   color: #E6EBFA;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -548,7 +573,7 @@ li {
 }
 
 .contacto {
-  background-image: url(./img/bateria.jpeg);
+  background-image: url(./img/musical-instruments-wooden-background-1385523.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
@@ -630,8 +655,8 @@ li {
 .contacto_info form #send {
   display: inline-block;
   background-color: transparent;
-  border: 3px solid #a52525;
-  color: #a52525;
+  border: 3px solid #c91515;
+  color: #c91515;
   font-weight: 700;
   text-transform: uppercase;
   width: 50%;
@@ -644,7 +669,7 @@ li {
 }
 
 .contacto_info form #send:hover {
-  background-color: #a52525;
+  background-color: #c91515;
   color: #E6EBFA;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -717,7 +742,7 @@ li {
 }
 
 #footer .footer h2 span {
-  color: #a52525;
+  color: #c91515;
 }
 
 #footer .footer h3 {
@@ -770,6 +795,9 @@ li {
   #header .header .nav-burguer {
     display: none;
   }
+  #header .header .nav-list .carritoSmallScreen {
+    display: none;
+  }
   #header .header .nav-list ul {
     background-color: transparent;
     left: 25%;
@@ -786,6 +814,9 @@ li {
   #header .header .nav-list ul li a {
     font-size: 1.5rem;
     padding: 0 15px;
+  }
+  #header .header .nav-list ul li a.carritoFullScreen {
+    display: block;
   }
   #header .header .nav-list ul li a::after {
     display: none;
