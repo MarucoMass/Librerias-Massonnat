@@ -31,6 +31,7 @@ arrayCursos.push(cursosGtrElec, cursosGtrEsp, cursosPiano, cursosBajo, cursosCan
 
 // inicializacion
 if (localStorage.getItem('cursos')) {
+    let subTotalAlmacenado = []
     arrayCompra = JSON.parse(localStorage.getItem('cursos'))
     arrayCompra.forEach((value) => {
         boxLista.innerHTML += `
@@ -40,6 +41,10 @@ if (localStorage.getItem('cursos')) {
             <button value="${value.id}" class="btnBorrar">Borrar</button>
         </div>
         <hr>
+        `
+        subTotalAlmacenado.push(value.precio)
+        boxSubTotal.innerHTML = `
+        <h4> Subtotal: $ ${subTotalAlmacenado.reduce((a, b) => a + b, 0)}</h4>
         `
     })
 } else {
