@@ -59,11 +59,67 @@ li{
         width: 100%;
         height: 100%;
         max-width: 1000px;
-        padding:  10px ;
-        }
-        & .carritoSmallScreen{
+        padding: 10px ;
+        position: relative;
+        & .boxCarrito{
             position: absolute;
-            right: 65px;
+            top: 55px;
+            right: 0px;
+            min-width: 20vw;
+            height: 50vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+            visibility: hidden;
+            &.active{
+                visibility: visible;
+            }
+            & #boxLista{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                
+                & .boxCompra{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+                    padding: 10px;
+                    color: $bg-2;
+                    font-size: $fs-sm;
+                }
+                & hr{
+                    width: 80%;
+                    height: 3px;
+                    margin: 5px 0;
+                }
+                & .btnBorrar{
+                    margin-top: 5px;
+                    padding: 2px;
+                    font-weight: 700;
+                    display: inline-block;
+                    background-color: transparent;
+                    border: 1.5px solid $bg-hover;
+                    color: $bg-hover;
+                    padding: 6px;
+                    transition: 0.3s ease;
+                    transition-property: background-color, color;
+                    cursor: pointer;
+                    &:hover{
+                        background-color: $bg-hover;
+                        color: $bg-2;
+                        transition: 0.3s;
+                    }
+                }
+            }
+        }
+        }
+        & #carritoSmallScreen{
+            position: absolute;
+            right: 60px;
             top: 25%;
             font-size: 1.2rem;
             color: $bg-7;
@@ -71,19 +127,24 @@ li{
             display: block;
             text-align: center;
             z-index: 1;
+            cursor: pointer;
             &:hover{
                 color: $bg-hover;
                 transition: 0.4s; 
                 cursor: pointer;
             }
+        & #carritoContador{
+            position: absolute;
+            left: 45px;
+            top: 25%;
+            font-size: 2rem;
+            color: $bg-hover;
+        }
         }
         & .brand a{
         font-size: $fs-m;
         font-weight: 600;
-        // text-transform: uppercase;
         color: $bg-7;
-        // text-shadow: 5px 5px 10px $bg-1;
-        // margin-top: 10px;
         & span{
             color: $bg-hover;
         }
@@ -110,14 +171,21 @@ li{
         color: $bg-7;
         transition: 0.4s;
         display: block;
-        &.carritoFullScreen{
+        &#carritoFullScreen{
             display: none;
+            cursor: pointer;
+            & #carritoContadorDos{
+                padding: 5px;
+                font-size: 2rem;
+                color: $bg-hover;
+            }
         }
         &:hover{
         color: $bg-hover;
         transition: 0.4s;    
                 }
             }
+            
         }
         & .nav-list ul.active{
         left: 0;    
@@ -165,7 +233,7 @@ li{
         &.active .bar::before{
         bottom: 0;
         }
-        }
+    }
     }
 }
 
@@ -645,7 +713,7 @@ li{
     #header .header .nav-burguer{
         display: none;
     }
-    #header .header .nav-list .carritoSmallScreen{
+    #header .header .nav-list #carritoSmallScreen{
         display: none;
     }
     #header .header .nav-list ul{
@@ -655,7 +723,7 @@ li{
         // height: auto;
         // width: fit-content;
         // position: relative;
-        left: 25%;
+        left: 30%;
         flex-direction: row;
         width: 100%;
         height: 100%;
@@ -665,7 +733,7 @@ li{
     & a{
         font-size: $fs-sm;
         padding: 0 15px;
-        &.carritoFullScreen{
+        &#carritoFullScreen{
             display: block;
         }
     &::after{

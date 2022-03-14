@@ -62,11 +62,94 @@ li {
   height: 100%;
   max-width: 1000px;
   padding: 10px;
+  position: relative;
 }
 
-#header .header .carritoSmallScreen {
+#header .header .nav-bar .boxCarrito {
   position: absolute;
-  right: 65px;
+  top: 55px;
+  right: 0px;
+  min-width: 20vw;
+  height: 50vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: auto;
+  visibility: hidden;
+}
+
+#header .header .nav-bar .boxCarrito.active {
+  visibility: visible;
+}
+
+#header .header .nav-bar .boxCarrito #boxLista {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+#header .header .nav-bar .boxCarrito #boxLista .boxCompra {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+  color: #E6EBFA;
+  font-size: 1.5rem;
+}
+
+#header .header .nav-bar .boxCarrito #boxLista hr {
+  width: 80%;
+  height: 3px;
+  margin: 5px 0;
+}
+
+#header .header .nav-bar .boxCarrito #boxLista .btnBorrar {
+  margin-top: 5px;
+  padding: 2px;
+  font-weight: 700;
+  display: inline-block;
+  background-color: transparent;
+  border: 1.5px solid #c91515;
+  color: #c91515;
+  padding: 6px;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  -webkit-transition-property: background-color, color;
+  transition-property: background-color, color;
+  cursor: pointer;
+}
+
+#header .header .nav-bar .boxCarrito #boxLista .btnBorrar:hover {
+  background-color: #c91515;
+  color: #E6EBFA;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#header .header #carritoSmallScreen {
+  position: absolute;
+  right: 60px;
   top: 25%;
   font-size: 1.2rem;
   color: #eeeeee;
@@ -75,13 +158,22 @@ li {
   display: block;
   text-align: center;
   z-index: 1;
+  cursor: pointer;
 }
 
-#header .header .carritoSmallScreen:hover {
+#header .header #carritoSmallScreen:hover {
   color: #c91515;
   -webkit-transition: 0.4s;
   transition: 0.4s;
   cursor: pointer;
+}
+
+#header .header #carritoSmallScreen #carritoContador {
+  position: absolute;
+  left: 45px;
+  top: 25%;
+  font-size: 2rem;
+  color: #c91515;
 }
 
 #header .header .brand a {
@@ -132,8 +224,15 @@ li {
   display: block;
 }
 
-#header .header .nav-list ul a.carritoFullScreen {
+#header .header .nav-list ul a#carritoFullScreen {
   display: none;
+  cursor: pointer;
+}
+
+#header .header .nav-list ul a#carritoFullScreen #carritoContadorDos {
+  padding: 5px;
+  font-size: 2rem;
+  color: #c91515;
 }
 
 #header .header .nav-list ul a:hover {
@@ -795,12 +894,12 @@ li {
   #header .header .nav-burguer {
     display: none;
   }
-  #header .header .nav-list .carritoSmallScreen {
+  #header .header .nav-list #carritoSmallScreen {
     display: none;
   }
   #header .header .nav-list ul {
     background-color: transparent;
-    left: 25%;
+    left: 30%;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -815,7 +914,7 @@ li {
     font-size: 1.5rem;
     padding: 0 15px;
   }
-  #header .header .nav-list ul li a.carritoFullScreen {
+  #header .header .nav-list ul li a#carritoFullScreen {
     display: block;
   }
   #header .header .nav-list ul li a::after {

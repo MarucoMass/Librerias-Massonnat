@@ -7,6 +7,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./img/piano.svg" type="image/svg">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>MusiCasa</title>
 </head>
 <body>
@@ -18,15 +19,23 @@
                     <a href="#home">Musi<span>Casa</span></a>
                 </div>
                 <div class="nav-list">
-                    <a href="#" class="carritoSmallScreen">Mi<Br> carrito</a>
+                    <h5 id="carritoSmallScreen" class="carritoBtn">Mi<Br> carrito</h5>
+                    <!-- <a id="carritoSmallScreen" class="carritoBtn">Mi<Br> carrito -->
+                        <!-- <span id="carritoContador"></span> -->
+                    </a>
                     <div class="nav-burguer"><div class="bar"></div></div>
                         <ul>
                             <li><a href="#home">Home</a></li>
                             <li><a href="#cursos">Cursos</a></li>
                             <li><a href="#somos">Quiénes somos</a></li>
                             <li><a href="#contacto">Contacto</a></li>
-                            <li><a class="carritoFullScreen" href="#carrito">Mi carrito</a></li>
+                            <!-- <li><p id="carritoSmallScreen" class="carritoBtn">Mi<Br> carrito</p></li> -->
+                            <li><a id="carritoFullScreen" class="carritoBtn">Mi carrito</a></li>
+                            <!-- <span id="carritoContadorDos"></span> -->
                         </ul>
+                </div>
+                <div class="boxCarrito">
+                    <div id="boxLista"></div>
                 </div>
             </div>
         </div>
