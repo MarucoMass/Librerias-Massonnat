@@ -25,8 +25,11 @@ const carritoBtn = document.querySelectorAll('.carritoBtn')
 const cursos_boxes = document.getElementById('cursos_boxes')
 let boxCarrito = document.querySelector('.boxCarrito')
 const boxLista = document.getElementById('boxLista')
-// let boxes = document.querySelectorAll('.cursos_box')
+const boxSubTotal = document.getElementById('boxSubTotal')
 
+arrayCursos.push(cursosGtrElec, cursosGtrEsp, cursosPiano, cursosBajo, cursosCanto, cursosTrompeta, cursosFlauta, cursosViolin, cursosCello, cursosSaxo)
+
+// inicializacion
 if (localStorage.getItem('cursos')) {
     arrayCompra = JSON.parse(localStorage.getItem('cursos'))
     arrayCompra.forEach((value) => {
@@ -42,7 +45,6 @@ if (localStorage.getItem('cursos')) {
 } else {
     localStorage.setItem('cursos', JSON.stringify(arrayCompra))
 }
-arrayCursos.push(cursosGtrElec, cursosGtrEsp, cursosPiano, cursosBajo, cursosCanto, cursosTrompeta, cursosFlauta, cursosViolin, cursosCello, cursosSaxo)
 
 const cargarCursos = () => {
     arrayCursos.forEach((value) => {
@@ -70,6 +72,7 @@ const comprarCursos = () =>{
                 arrayCompra.push(finder)
                 localStorage.setItem('cursos', JSON.stringify(arrayCompra))
                 mostrarCursos()
+                subTotal()
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -113,9 +116,11 @@ const borrarCursos = () => {
     if (boxLista.innerHTML != '') {
         boxLista.innerHTML = ''
         let cursoComprado = JSON.parse(localStorage.getItem('cursos'))
-        arrayCompra = cursoComprado.filter(el => el.id != e.target.value)
-        localStorage.removeItem('cursos')
-        localStorage.setItem('cursos', JSON.stringify(arrayCompra))
+        arrayCompra = cursoComprado.filter(el => el.id != e.target.value) // filtra todos los cursos no borrados
+        cursoBorrado = cursoComprado.find(el => el.id == e.target.value)
+        precioBorrado = cursoBorrado.precio
+        localStorage.removeItem('cursos') // remueve el localStorage viejo
+        localStorage.setItem('cursos', JSON.stringify(arrayCompra)) // agrega el localStorage nuevo
         arrayCompra.forEach((value) => {
             boxLista.innerHTML += `
             <div class="boxCompra">
@@ -126,6 +131,8 @@ const borrarCursos = () => {
             <hr>
             `
         })
+        subTotal()
+        // si no hay ningun curso que oculte el carrito
         if(boxLista.innerHTML == '') {
             boxCarrito.classList.remove('active')
         }
@@ -133,10 +140,24 @@ const borrarCursos = () => {
 })
 }
 
+const subTotal = () => {
+    let arrayPrecios = []
+    let cursoComprado = JSON.parse(localStorage.getItem('cursos'))
+    for (const item of cursoComprado) {
+        let precio = item.precio
+        arrayPrecios.push(precio)
+    }
+    let subTotal = arrayPrecios.reduce((a, b) => a + b, 0)
+    boxSubTotal.innerHTML = `
+    <h4> Subtotal: $ ${subTotal}</h4>
+    `
+}
+
 
 cargarCursos()
 comprarCursos()
 borrarCursos()
+// subTotal()
 
 
 // ****************************************************************************************

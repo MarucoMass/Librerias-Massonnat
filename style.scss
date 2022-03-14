@@ -70,12 +70,16 @@ li{
             background-color: rgba(0, 0, 0, 0.8);
             overflow: auto;
             visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // justify-content: center;
             &.active{
                 visibility: visible;
             }
             & #boxLista{
                 width: 100%;
-                height: 100%;
+                // height: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -114,6 +118,16 @@ li{
                         transition: 0.3s;
                     }
                 }
+            }
+            & #boxSubTotal{
+                width: 100%;
+                height: 100px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 10px;
+                color: $bg-2;
+                font-size: $fs-sm;
             }
         }
         }
