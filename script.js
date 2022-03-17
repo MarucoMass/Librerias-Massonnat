@@ -1,93 +1,37 @@
-class Curso{
-    constructor(id, nombre, precio){
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio
-    }
-}
-const cursosGtrElec = new Curso(1, 'Curso de Guitarra Eléctrica', 12000)
-const cursosGtrEsp = new Curso(2, 'Curso de Guitarra Española', 10000)
-const cursosPiano = new Curso(3, 'Curso de Piano', 9000)
-const cursosBajo = new Curso(4, 'Curso de Bajo', 11000)
-const cursosCanto = new Curso(5, 'Curso de Canto', 7000)
-const cursosTrompeta = new Curso(6, 'Curso de Trompeta', 8000)
-const cursosFlauta = new Curso(7, 'Curso de Flauta', 8000)
-const cursosViolin = new Curso(8, 'Curso de Violin', 9500)
-const cursosCello = new Curso(9, 'Curso de Cello', 8500)
-const cursosSaxo = new Curso(10, 'Curso de Saxo', 9000)
-let arrayCursos = []
-let arrayCompra = []
-// let newArray = []
-let contador = document.getElementById('carritoContador')
-let contadorDos = document.getElementById('carritoContadorDos')
-let cuenta = 0
-const carritoBtn = document.querySelectorAll('.carritoBtn')
-const cursos_boxes = document.getElementById('cursos_boxes')
-let boxCarrito = document.querySelector('.boxCarrito')
-const boxLista = document.getElementById('boxLista')
-const boxSubTotal = document.getElementById('boxSubTotal')
 
-arrayCursos.push(cursosGtrElec, cursosGtrEsp, cursosPiano, cursosBajo, cursosCanto, cursosTrompeta, cursosFlauta, cursosViolin, cursosCello, cursosSaxo)
-
-// inicializacion
-if (localStorage.getItem('cursos')) {
-    let subTotalAlmacenado = []
-    arrayCompra = JSON.parse(localStorage.getItem('cursos'))
-    arrayCompra.forEach((value) => {
-        boxLista.innerHTML += `
-        <div class="boxCompra">
-            <h4>${value.nombre}</h4>
-            <h5>Precio: $ ${value.precio}</h5>
-            <button value="${value.id}" class="btnBorrar">Borrar</button>
-        </div>
-        <hr>
-        `
-        subTotalAlmacenado.push(value.precio)
-        boxSubTotal.innerHTML = `
-        <h4> Subtotal: $ ${subTotalAlmacenado.reduce((a, b) => a + b, 0)}</h4>
-        `
-    })
-} else {
-    localStorage.setItem('cursos', JSON.stringify(arrayCompra))
-}
-
-const cargarCursos = () => {
-    arrayCursos.forEach((value) => {
+fetch("./json/cursos.json")
+.then(res => res.json())
+.then(cursos => {
+    cursos.forEach((value) => {
         cursos_boxes.innerHTML += `
         <div class="cursos_box" id="curso${value.id}">
-        <h3>${value.nombre}</h3>
-        <p>Este curso tiene un costo de $${value.precio}.</p>
-        <button value="${value.id}">Agregar al carrito</button>
+        <h3 class="nombre">${value.nombre}</h3>
+        <p class="precio">Este curso tiene un costo de $ <span>${value.precio}</span></p>
+        <button class="btn-agregar" data-id="${value.id}">Agregar al carrito</button>
     </div>   `
     })
-}
 
-// localStorage.clear()
-const comprarCursos = () =>{
-    cursos_boxes.addEventListener('click', (e) => {
-        if(e.target.value){
-            let finder = arrayCursos.find((el) => el.id == e.target.value)
-            let id = finder.id
-            if (!arrayCompra.some((el) => el.id == id)) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Se ha añadido al carrito',
-                    text: 'Gracias!',
-                })
-                arrayCompra.push(finder)
-                localStorage.setItem('cursos', JSON.stringify(arrayCompra))
-                mostrarCursos()
-                subTotal()
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ya elegiste ese curso',
-                    text: 'Elige alguno de los otros!',
-                })
-            }
-        }
-    })
-}
+    const btnAgregar = document.querySelectorAll(".btn-agregar")
+    btnAgregar.forEach((e) =>
+      e.addEventListener("click", (e) => {
+        let cardPadre = e.target.parentElement
+        agregarAlCarrito(cardPadre)
+        Swal.fire({
+            icon: 'success',
+            title: 'Se ha añadido al carrito',
+            text: 'Gracias!',
+            })
+      })
+    )
+})
+
+const carritoBtn = document.querySelectorAll(".carritoBtn")
+const cursos_boxes = document.getElementById("cursos_boxes")
+const boxCarrito = document.querySelector(".boxCarrito")
+const boxLista = document.getElementById("boxLista")
+const boxTotal = document.getElementById("boxTotal")
+
+let carrito = JSON.parse(localStorage.getItem("cursos")) || [];
 
 carritoBtn.forEach(el => el.addEventListener('click', () => {
     if (boxLista.innerHTML == '') {
@@ -96,92 +40,95 @@ carritoBtn.forEach(el => el.addEventListener('click', () => {
             title: 'No hay cursos',
             text: 'Elige alguno de los cursos!',
         })
-        boxCarrito.classList.remove('active')
+        boxCarrito.classList.remove("active")
     } else {
-        boxCarrito.classList.toggle('active')
+        boxCarrito.classList.toggle("active")
     }
 }))
 
-const mostrarCursos = () => {
-    boxLista.innerHTML = ''
-    let cursoComprado = JSON.parse(localStorage.getItem('cursos'))
-    cursoComprado.forEach((value) => {
-        boxLista.innerHTML += `
+const agregarAlCarrito = (cardPadre) => {
+    let curso = {
+      nombre: cardPadre.querySelector(".nombre").textContent,
+      precio: Number(cardPadre.querySelector(".precio span").textContent),
+      cantidad: 1,
+      id: Number(cardPadre.querySelector("button").getAttribute("data-id")),
+    }
+  
+    let cursoEncontrado = carrito.find((element) => element.id === curso.id)
+  
+    if (cursoEncontrado) {
+      cursoEncontrado.cantidad++
+    } else {
+      carrito.push(curso)
+    }
+    mostrarCarrito()
+  };
+
+  const mostrarCarrito = () => {
+    boxLista.innerHTML = ""
+    carrito.forEach((element) => {
+      let {nombre, precio, cantidad, id } = element
+      boxLista.innerHTML += `
         <div class="boxCompra">
-            <h4>${value.nombre}</h4>
-            <h5>Precio: $ ${value.precio}</h5>
-            <button value="${value.id}" class="btnBorrar">Borrar</button>
+            <h4 class="nombre">${nombre}</h4>
+            <h5>Cantidad: ${cantidad}</h5>
+            <h5>Subtotal: $<span> ${precio * cantidad}</span></h5>
+            <div id="boxBtn">
+            <button class="btnRestar" data-id="${id}">-</button>
+            <button class="btnBorrar" data-id="${id}">Borrar</button>
+            </div>
         </div>
         <hr>
         `
     })
-}
-const borrarCursos = () => {
-    boxLista.addEventListener('click', (e) => {
-    if (boxLista.innerHTML != '') {
-        boxLista.innerHTML = ''
-        let cursoComprado = JSON.parse(localStorage.getItem('cursos'))
-        arrayCompra = cursoComprado.filter(el => el.id != e.target.value) // filtra todos los cursos no borrados
-        cursoBorrado = cursoComprado.find(el => el.id == e.target.value)
-        precioBorrado = cursoBorrado.precio
-        localStorage.removeItem('cursos') // remueve el localStorage viejo
-        localStorage.setItem('cursos', JSON.stringify(arrayCompra)) // agrega el localStorage nuevo
-        arrayCompra.forEach((value) => {
-            boxLista.innerHTML += `
-            <div class="boxCompra">
-                <h4>${value.nombre}</h4>
-                <h5>Precio: $ ${value.precio}</h5>
-                <button value="${value.id}" class="btnBorrar">Borrar</button>
-            </div>
-            <hr>
-            `
-        })
-        subTotal()
-        // si no hay ningun curso que oculte el carrito
-        if(boxLista.innerHTML == '') {
-            boxCarrito.classList.remove('active')
-        }
-    } 
-})
-}
+    localStorage.setItem("cursos", JSON.stringify(carrito))
+    total()
+  }
 
-const subTotal = () => {
+  const restarProducto = (cursoRestar) => {
+    let cursoEncontrado = carrito.find(
+      (element) => element.id === Number(cursoRestar)
+    )
+    if (cursoEncontrado) {
+      cursoEncontrado.cantidad--
+      if (cursoEncontrado.cantidad === 0) {
+        cursoEncontrado.cantidad = 1
+      }
+    }
+    mostrarCarrito()
+  }
+
+  const borrarProducto = (cursoBorrar) => {
+    carrito = carrito.filter((element) => element.id !== Number(cursoBorrar))
+    mostrarCarrito()
+  }
+
+  const botonesCarrito = () => {
+    boxLista.addEventListener("click", (e) => {
+      if (e.target.classList.contains("btnRestar")) {
+        restarProducto(e.target.getAttribute("data-id"))
+      }
+      if (e.target.classList.contains("btnBorrar")) {
+        borrarProducto(e.target.getAttribute("data-id"))
+      }
+      if(boxLista.innerHTML == '') {
+        boxCarrito.classList.remove("active")
+    }
+    })
+  }
+
+  const total = () => {
     let arrayPrecios = []
-    let cursoComprado = JSON.parse(localStorage.getItem('cursos'))
-    for (const item of cursoComprado) {
-        let precio = item.precio
-        arrayPrecios.push(precio)
+    let cursosComprado = JSON.parse(localStorage.getItem("cursos"))
+    for (const item of cursosComprado) {
+        let total = item.precio * item.cantidad
+        arrayPrecios.push(total)
     }
-    let subTotal = arrayPrecios.reduce((a, b) => a + b, 0)
-    boxSubTotal.innerHTML = `
-    <h4> Subtotal: $ ${subTotal}</h4>
+    let sumaTotal = arrayPrecios.reduce((a, b) => a + b, 0)
+    boxTotal.innerHTML = `
+    <h4>Total: $ ${sumaTotal}</h4>
     `
-}
+  };
 
-
-cargarCursos()
-comprarCursos()
-borrarCursos()
-// subTotal()
-
-
-// ****************************************************************************************
-// header
-const hamburguer = document.querySelector('.header .nav-bar .nav-list .nav-burguer');
-const hamburguerA = document.querySelector('.header .nav-bar .nav-list .nav-burguer .active');
-const mobile = document.querySelector('.header .nav-bar .nav-list ul');
-const mobileA = document.querySelector('.header .nav-bar .nav-list ul .active');
-const item = document.querySelectorAll('.header .nav-bar .nav-list ul li a');
-const header = document.querySelector('.header.container');
-
-hamburguer.addEventListener("click", ()=>{
-    hamburguer.classList.toggle("active");
-    mobile.classList.toggle("active");
-})
-
-item.forEach(selectItem => selectItem.addEventListener("click", ()=>{
-    if ((mobile.classList = "active") || (hamburguer.classList = "active")) {
-        hamburguer.classList.toggle("active");
-        mobile.classList.toggle("active");     
-    }
-}))
+mostrarCarrito()
+botonesCarrito()

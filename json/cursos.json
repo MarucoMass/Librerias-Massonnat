@@ -1,0 +1,43 @@
+[
+    {
+      "nombre": "Curso de Guitarra Eléctrica",
+      "precio": 12000,
+      "id": 1
+    },
+    {
+      "nombre": "Curso de Guitarra Española",
+      "precio": 11000,
+      "id": 2
+    },
+    {
+      "nombre": "Curso de Guitarra Piano",
+      "precio": 10500,
+      "id": 3
+    },
+    {
+      "nombre": "Curso de Canto",
+      "precio": 9000,
+      "id": 4
+    },
+    {
+      "nombre": "Curso de Bajo",
+      "precio": 9500,
+      "id": 5
+    },
+    {
+      "nombre": "Curso de Trompeta",
+      "precio": 9000,
+      "id": 6
+    },
+    {
+      "nombre": "Curso de Cello",
+      "precio": 8000,
+      "id": 7
+    },
+    {
+      "nombre": "Curso de Violin",
+      "precio": 8500,
+      "id": 8
+    }
+     
+  ]
