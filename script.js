@@ -18,7 +18,7 @@ fetch("./json/cursos.json")
         agregarAlCarrito(cardPadre)
         Swal.fire({
             icon: 'success',
-            title: 'Se ha añadido al carrito',
+            title: 'El curso se ha añadido al carrito',
             text: 'Gracias!',
             })
       })
