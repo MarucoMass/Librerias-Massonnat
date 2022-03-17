@@ -7,11 +7,11 @@ fetch("./json/cursos.json")
         <div class="cursos_box" id="curso${value.id}">
         <h3 class="nombre">${value.nombre}</h3>
         <p class="precio">Este curso tiene un costo de $ <span>${value.precio}</span></p>
-        <button class="btn-agregar" data-id="${value.id}">Agregar al carrito</button>
+        <button class="btnAgregar" data-id="${value.id}">Agregar al carrito</button>
     </div>   `
     })
 
-    const btnAgregar = document.querySelectorAll(".btn-agregar")
+    const btnAgregar = document.querySelectorAll(".btnAgregar")
     btnAgregar.forEach((e) =>
       e.addEventListener("click", (e) => {
         let cardPadre = e.target.parentElement
@@ -37,7 +37,7 @@ carritoBtn.forEach(el => el.addEventListener('click', () => {
     if (boxLista.innerHTML == '') {
         Swal.fire({
             icon: 'error',
-            title: 'No hay cursos',
+            title: 'No hay cursos en el carrito',
             text: 'Elige alguno de los cursos!',
         })
         boxCarrito.classList.remove("active")
@@ -86,9 +86,7 @@ const agregarAlCarrito = (cardPadre) => {
   }
 
   const restarProducto = (cursoRestar) => {
-    let cursoEncontrado = carrito.find(
-      (element) => element.id === Number(cursoRestar)
-    )
+    let cursoEncontrado = carrito.find((element) => element.id === Number(cursoRestar))
     if (cursoEncontrado) {
       cursoEncontrado.cantidad--
       if (cursoEncontrado.cantidad === 0) {
@@ -111,7 +109,7 @@ const agregarAlCarrito = (cardPadre) => {
       if (e.target.classList.contains("btnBorrar")) {
         borrarProducto(e.target.getAttribute("data-id"))
       }
-      if(boxLista.innerHTML == '') {
+      if(boxLista.innerHTML == "") {
         boxCarrito.classList.remove("active")
     }
     })
