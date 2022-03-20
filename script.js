@@ -56,11 +56,7 @@ const agregarAlCarrito = (cardPadre) => {
   
     let cursoEncontrado = carrito.find((element) => element.id === curso.id)
   
-    if (cursoEncontrado) {
-      cursoEncontrado.cantidad++
-    } else {
-      carrito.push(curso)
-    }
+    cursoEncontrado ? cursoEncontrado.cantidad++ : carrito.push(curso)
     mostrarCarrito()
   };
 

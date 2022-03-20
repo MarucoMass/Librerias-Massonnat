@@ -140,8 +140,9 @@
                    <p>Si tienes alguna pregunta o consulta no dudes en escribirnos.<br> Te responderemos a la brevedad con toda la información que necesites.</p>
                </div>
                <div>
-                   <form action="">
+                   <form action="" method="post" id="formDeContacto">
                        <input type="text" id="nombre" class="btn"placeholder="Tu nombre">
+                       <input type="text" id="apellido" class="btn"placeholder="Tu apellido">
                        <input type="email" name="" id="email" class="btn" placeholder="Tu email">
                        <textarea name="" id="consulta" cols="30" rows="5" class="btn" placeholder="Tu consulta"></textarea>
                        <input type="submit" name="" id="send" class="btn" placeholder="Enviar">
@@ -182,6 +183,7 @@
        <!-- fin footer -->
        <script src="./script.js"></script>
        <script src="./header.js"></script>
+       <script src="./formulario.js"></script>
        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
        <script>
         AOS.init({
