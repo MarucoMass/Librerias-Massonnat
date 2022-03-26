@@ -191,6 +191,28 @@ li {
   font-size: 1.5rem;
 }
 
+#header .header .nav-bar .boxCarrito #btnComprar {
+  margin: 10px 0;
+  font-weight: 700;
+  display: inline-block;
+  background-color: transparent;
+  border: 1.5px solid #c91515;
+  color: #c91515;
+  padding: 6px;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  -webkit-transition-property: background-color, color;
+  transition-property: background-color, color;
+  cursor: pointer;
+}
+
+#header .header .nav-bar .boxCarrito #btnComprar:hover {
+  background-color: #c91515;
+  color: #E6EBFA;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
 #header .header #carritoSmallScreen {
   position: absolute;
   right: 60px;
