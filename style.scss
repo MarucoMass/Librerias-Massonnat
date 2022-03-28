@@ -614,7 +614,7 @@ li{
                 background-color: whitesmoke;
                 max-width: 280px;
                 margin: 15px;
-                padding: 10px;
+                // padding: 10px;
                 border-radius: 10px;
                 box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.8), 2px 2px 30px rgba(0, 0, 0, 0.3);
                 & img{
@@ -626,11 +626,13 @@ li{
                     font-size: $fs-sm;
                     font-weight: 800;
                     line-height: 1.5rem;
+                    padding: 10px;
                 }
                 & p{
                     font-size: 1.3rem;
                     font-weight: 500;
                     line-height: 1.3rem;
+                    padding: 5px 0 10px 0;
                 }
             }
         }
