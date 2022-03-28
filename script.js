@@ -33,7 +33,7 @@ const boxTotal = document.getElementById("boxTotal")
 
 let carrito = JSON.parse(localStorage.getItem("cursos")) || [];
 
-carritoBtn.forEach(el => el.addEventListener('click', () => {
+carritoBtn.forEach(el => el.addEventListener("click", () => {
     if (boxLista.innerHTML == '') {
         Swal.fire({
             icon: 'error',
@@ -126,3 +126,11 @@ const agregarAlCarrito = (cardPadre) => {
 
 mostrarCarrito()
 botonesCarrito()
+
+
+// esto es para sacar el carrito al clickear sobre el DOM
+document.addEventListener("click", (e) => {
+  if (e.target.tagName == 'DIV' || e.target.tagName == 'H1' || e.target.tagName == 'H2' || e.target.tagName == 'P') {
+    boxCarrito.classList.remove("active")
+  }
+})
