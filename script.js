@@ -1,3 +1,10 @@
+const carritoBtn = document.querySelectorAll(".carritoBtn")
+const cursos_boxes = document.getElementById("cursos_boxes")
+const boxCarrito = document.querySelector(".boxCarrito")
+const carritoBox = document.getElementById("carritoBox")
+const boxLista = document.getElementById("boxLista")
+const boxTotal = document.getElementById("boxTotal")
+const btnComprar = document.getElementById("btnComprar")
 
 fetch("./json/cursos.json")
 .then(res => res.json())
@@ -16,20 +23,9 @@ fetch("./json/cursos.json")
       e.addEventListener("click", (e) => {
         let cardPadre = e.target.parentElement
         agregarAlCarrito(cardPadre)
-        Swal.fire({
-            icon: 'success',
-            title: 'El curso se ha añadido al carrito',
-            text: 'Gracias!',
-            })
       })
     )
 })
-
-const carritoBtn = document.querySelectorAll(".carritoBtn")
-const cursos_boxes = document.getElementById("cursos_boxes")
-const boxCarrito = document.querySelector(".boxCarrito")
-const boxLista = document.getElementById("boxLista")
-const boxTotal = document.getElementById("boxTotal")
 
 let carrito = JSON.parse(localStorage.getItem("cursos")) || [];
 
@@ -58,6 +54,11 @@ const agregarAlCarrito = (cardPadre) => {
   
     cursoEncontrado ? cursoEncontrado.cantidad++ : carrito.push(curso)
     mostrarCarrito()
+    Swal.fire({
+      icon: 'success',
+      title: `${curso.nombre} se ha añadido al carrito`,
+      text: 'Gracias!',
+      })
   };
 
   const mostrarCarrito = () => {
@@ -78,7 +79,9 @@ const agregarAlCarrito = (cardPadre) => {
         `
     })
     localStorage.setItem("cursos", JSON.stringify(carrito))
-    total()
+    boxTotal.innerHTML = `
+    <h4>Total: $ ${total()}</h4>
+    `
   }
 
   const restarProducto = (cursoRestar) => {
@@ -119,18 +122,33 @@ const agregarAlCarrito = (cardPadre) => {
         arrayPrecios.push(total)
     }
     let sumaTotal = arrayPrecios.reduce((a, b) => a + b, 0)
-    boxTotal.innerHTML = `
-    <h4>Total: $ ${sumaTotal}</h4>
-    `
+    return sumaTotal
   };
 
-mostrarCarrito()
-botonesCarrito()
-
-
+  
+  
 // esto es para sacar el carrito al clickear sobre el DOM
 document.addEventListener("click", (e) => {
   if (e.target.tagName == 'DIV' || e.target.tagName == 'H1' || e.target.tagName == 'H2' || e.target.tagName == 'P') {
     boxCarrito.classList.remove("active")
   }
 })
+
+// funcion para flujo de salida
+function checkout() { 
+btnComprar.addEventListener("click", () => {
+  Swal.fire({
+    icon: 'success',
+    title: `El total es $ ${total()}`,
+    text: 'Gracias por su compra!',
+  })
+  localStorage.removeItem("cursos");
+  carrito = [];
+  boxLista.innerHTML = "";
+  boxCarrito.classList.remove("active");
+})
+}
+
+
+botonesCarrito();
+checkout();
