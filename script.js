@@ -6,18 +6,28 @@ const boxLista = document.getElementById("boxLista")
 const boxTotal = document.getElementById("boxTotal")
 const btnComprar = document.getElementById("btnComprar")
 
+const styleNumber = { style: 'currency', currency: 'USD' };
+const numberFormat = new Intl.NumberFormat('en-US', styleNumber);
+
+let carrito = JSON.parse(localStorage.getItem("cursos")) || [];
+
+// llamo el archivo json
 fetch("./json/cursos.json")
 .then(res => res.json())
 .then(cursos => {
+  // creo los boxes en el dom
     cursos.forEach((value) => {
+      let {nombre, precio, id } = value
+      let precioFormat = numberFormat.format(precio).slice(1, -1)
+
         cursos_boxes.innerHTML += `
-        <div class="cursos_box" id="curso${value.id}">
-        <h3 class="nombre">${value.nombre}</h3>
-        <p class="precio">Este curso tiene un costo de $ <span>${value.precio}</span></p>
-        <button class="btnAgregar" data-id="${value.id}">Agregar al carrito</button>
+        <div class="cursos_box" id="curso${id}">
+        <h3 class="nombre">${nombre}</h3>
+        <p class="precio">Este curso tiene un costo de $<span>${precio}</span></p>
+        <button class="btnAgregar" data-id="${id}">Agregar al carrito</button>
     </div>   `
     })
-
+// extraigo la informacion del elemento padre del box clickeado y se lo paso como parametro a la funcion agregarAlCarrito
     const btnAgregar = document.querySelectorAll(".btnAgregar")
     btnAgregar.forEach((e) =>
       e.addEventListener("click", (e) => {
@@ -27,8 +37,8 @@ fetch("./json/cursos.json")
     )
 })
 
-let carrito = JSON.parse(localStorage.getItem("cursos")) || [];
 
+// si el carrito esta vacio salta un sweetalert
 carritoBtn.forEach(el => el.addEventListener("click", () => {
     if (boxLista.innerHTML == '') {
         Swal.fire({
@@ -42,6 +52,7 @@ carritoBtn.forEach(el => el.addEventListener("click", () => {
     }
 }))
 
+// selecciono la info que quiero y creo un objeto en base al parametro 
 const agregarAlCarrito = (cardPadre) => {
     let curso = {
       nombre: cardPadre.querySelector(".nombre").textContent,
@@ -49,11 +60,13 @@ const agregarAlCarrito = (cardPadre) => {
       cantidad: 1,
       id: Number(cardPadre.querySelector("button").getAttribute("data-id")),
     }
-  
+
+  // aumento solo la cantidad si ya existe en el array
     let cursoEncontrado = carrito.find((element) => element.id === curso.id)
-  
     cursoEncontrado ? cursoEncontrado.cantidad++ : carrito.push(curso)
+
     mostrarCarrito()
+
     Swal.fire({
       icon: 'success',
       title: `${curso.nombre} se ha añadido al carrito`,
@@ -61,15 +74,18 @@ const agregarAlCarrito = (cardPadre) => {
       })
   };
 
+  // muestro en html del carrito
   const mostrarCarrito = () => {
     boxLista.innerHTML = ""
     carrito.forEach((element) => {
       let {nombre, precio, cantidad, id } = element
+      let subtotal = numberFormat.format(precio * cantidad)
+     
       boxLista.innerHTML += `
         <div class="boxCompra">
             <h4 class="nombre">${nombre}</h4>
             <h5>Cantidad: ${cantidad}</h5>
-            <h5>Subtotal: $<span> ${precio * cantidad}</span></h5>
+            <h5>Subtotal: <span>${subtotal}</span></h5>
             <div id="boxBtn">
             <button class="btnRestar" data-id="${id}">-</button>
             <button class="btnBorrar" data-id="${id}">Borrar</button>
@@ -80,7 +96,7 @@ const agregarAlCarrito = (cardPadre) => {
     })
     localStorage.setItem("cursos", JSON.stringify(carrito))
     boxTotal.innerHTML = `
-    <h4>Total: $ ${total()}</h4>
+    <h4>Total: ${total()}</h4>
     `
   }
 
@@ -114,6 +130,7 @@ const agregarAlCarrito = (cardPadre) => {
     })
   }
 
+  // calculo el total de los precios del array
   const total = () => {
     let arrayPrecios = []
     let cursosComprado = JSON.parse(localStorage.getItem("cursos"))
@@ -122,7 +139,9 @@ const agregarAlCarrito = (cardPadre) => {
         arrayPrecios.push(total)
     }
     let sumaTotal = arrayPrecios.reduce((a, b) => a + b, 0)
-    return sumaTotal
+    let totalFormat = numberFormat.format(sumaTotal)
+
+    return totalFormat
   };
 
   
@@ -139,7 +158,7 @@ function checkout() {
 btnComprar.addEventListener("click", () => {
   Swal.fire({
     icon: 'success',
-    title: `El total es $ ${total()}`,
+    title: `El total es ${total()}`,
     text: 'Gracias por su compra!',
   })
   localStorage.removeItem("cursos");
